@@ -6,6 +6,6 @@ This was a fresh build from an empty repository. No reference implementation or 
 | --- | --- |
 | Reference-owner names, domains, handles, contacts, claims, metadata, and assets | Not present / removed |
 | Owner name | Rohan Hiremathswami, from supplied résumé |
-| Public profiles | GitHub `hiremathswami`; LinkedIn `rohanhiremathswami` |
+| Public profiles | GitHub `hiremathswami`; LinkedIn `rohan-hiremathswami` |
 | Avatar likeness | Original generated visual based solely on the owner-supplied portrait |
 | StudyMentor user-count metric | Explicitly removed at owner request |
