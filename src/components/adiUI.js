@@ -34,6 +34,7 @@ export class AdiUI {
     this.assistant = new AdiAssistant();
     this.isOpen = false;
     this.isJobMatchOpen = false;
+    this.voiceRepliesEnabled = localStorage.getItem('adi_voice_replies') !== 'false';
     this.messages = [];
     this.container = null;
     this.init();
@@ -129,6 +130,7 @@ export class AdiUI {
             <span class="adi-status-text">Portfolio Intelligence • Online</span>
           </div>
           <div class="adi-header-actions">
+            <button class="adi-icon-btn ${this.voiceRepliesEnabled ? 'active' : ''}" id="adiVoiceToggleBtn" title="${this.voiceRepliesEnabled ? 'Voice Replies Enabled' : 'Voice Replies Muted'}" aria-label="Toggle Voice Replies">${this.voiceRepliesEnabled ? SPEAKER_SVG : '🔇'}</button>
             <button class="adi-icon-btn" id="adiMicHeaderBtn" title="Voice Input (Mic)" aria-label="Toggle Voice Input">${MIC_SVG}</button>
             <button class="adi-icon-btn" id="adiClearBtn" title="Clear Chat" aria-label="Clear Chat History">${TRASH_SVG}</button>
             <button class="adi-icon-btn adi-close-btn" id="adiCloseBtn" title="Close Assistant" aria-label="Close Chat Window">${CLOSE_SVG}</button>
@@ -320,6 +322,21 @@ export class AdiUI {
     micHeaderBtn.addEventListener('click', () => handleMicToggle(micHeaderBtn));
     micInputBtn.addEventListener('click', () => handleMicToggle(micInputBtn));
 
+    // Voice Reply Mute/Unmute Toggle
+    const voiceToggleBtn = document.getElementById('adiVoiceToggleBtn');
+    if (voiceToggleBtn) {
+      voiceToggleBtn.addEventListener('click', () => {
+        this.voiceRepliesEnabled = !this.voiceRepliesEnabled;
+        localStorage.setItem('adi_voice_replies', this.voiceRepliesEnabled ? 'true' : 'false');
+        voiceToggleBtn.classList.toggle('active', this.voiceRepliesEnabled);
+        voiceToggleBtn.title = this.voiceRepliesEnabled ? 'Voice Replies Enabled' : 'Voice Replies Muted';
+        voiceToggleBtn.innerHTML = this.voiceRepliesEnabled ? SPEAKER_SVG : '🔇';
+        if (!this.voiceRepliesEnabled) {
+          this.assistant.stopSpeech();
+        }
+      });
+    }
+
     // Speaker Listen Button Click
     messagesContainer.addEventListener('click', (e) => {
       const btn = e.target.closest('.adi-speaker-btn');
@@ -356,6 +373,35 @@ export class AdiUI {
     panel.setAttribute('aria-hidden', 'false');
     this.scrollToBottom();
     document.getElementById('adiInput').focus();
+
+    // Auto-speak welcome message on first launcher click in session
+    const hasSpokenWelcome = sessionStorage.getItem('adiWelcomeSpoken');
+    if (!hasSpokenWelcome && this.voiceRepliesEnabled) {
+      sessionStorage.setItem('adiWelcomeSpoken', 'true');
+
+      // Wait for panel open animation to complete (320ms)
+      setTimeout(() => {
+        const container = document.getElementById('adiMessages');
+        if (container) {
+          const firstRow = container.querySelector('.adi-msg-row.assistant');
+          if (firstRow) {
+            const speakerBtn = firstRow.querySelector('.adi-speaker-btn');
+            const welcomeText = this.messages[0]?.text;
+            if (welcomeText && speakerBtn) {
+              this.assistant.speakText(welcomeText, speakerBtn, (isSpeaking) => {
+                if (isSpeaking) {
+                  speakerBtn.classList.add('speaking');
+                  speakerBtn.innerHTML = `${STOP_SPEAKER_SVG} Stop Listening`;
+                } else {
+                  speakerBtn.classList.remove('speaking');
+                  speakerBtn.innerHTML = `${SPEAKER_SVG} Listen`;
+                }
+              });
+            }
+          }
+        }
+      }, 320);
+    }
   }
 
   closeChat() {
