@@ -5,7 +5,7 @@ export const portfolioData = {
     title: "Full-Stack & AI Developer",
     location: "Kolhapur, Maharashtra, India",
     headline: "Building AI-powered web products, MERN stack applications, and interactive user experiences.",
-    summary: "I’m Rohan Hiremathswami, a BCA Computer Science student and full-stack developer from Kolhapur. I specialize in building MERN stack web applications, integrating AI capabilities, and designing responsive, high-performance web products.",
+    summary: "I’m Rohan Hiremathswami, a BCA Computer Science graduate from D Y Patil School of Engineering and Management (DYPSEM) and full-stack developer from Kolhapur. I specialize in building MERN stack web applications, integrating AI capabilities, and designing responsive, high-performance web products.",
     availability: "Open to full-time roles, internships, and collaborative AI/web engineering projects.",
     preferredRoles: [
       "Full-Stack Developer",
@@ -19,13 +19,13 @@ export const portfolioData = {
     {
       degree: "BCA (Bachelor of Computer Applications)",
       specialization: "Computer Science & Web Engineering",
-      institution: "Kolhapur, Maharashtra",
+      institution: "D Y Patil School of Engineering and Management (DYPSEM)",
       location: "Kolhapur, IN",
-      period: "Currently Pursuing",
+      period: "Completed",
       highlights: [
-        "Core Computer Science fundamentals and Web Software Architecture",
-        "Object-Oriented Programming with C++ and Data Analysis with Python & R",
-        "Full-Stack MERN Development and Cloud/AI Specialization"
+        "Completed BCA in Computer Science from D Y Patil School of Engineering and Management (DYPSEM)",
+        "Core Computer Science fundamentals, Software Architecture & Object-Oriented Programming",
+        "Data Analysis with Python & R Language and Full-Stack MERN Architecture"
       ]
     }
   ],
@@ -257,7 +257,7 @@ export const portfolioData = {
   achievements: [
     "Earned 11 professional certifications across GCP Cloud Infrastructure, AWS Generative AI, Google Data Analytics, and DataCamp.",
     "Built and deployed 5 full-stack web products including e-commerce platforms and AI applications.",
-    "BCA Computer Science student maintaining high practical focus in MERN stack development, Python data analytics, and AI integration."
+    "Completed BCA in Computer Science from D Y Patil School of Engineering and Management (DYPSEM) with high practical focus in MERN stack development, Python data analytics, and AI integration."
   ],
 
   contact: {
