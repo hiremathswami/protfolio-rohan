@@ -1,5 +1,12 @@
 import { AdiAssistant } from './adiAssistant.js';
 
+const MIC_SVG = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>`;
+const TRASH_SVG = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>`;
+const CLOSE_SVG = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+const SPEAKER_SVG = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>`;
+const STOP_SPEAKER_SVG = `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>`;
+const SEND_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>`;
+
 function getAdiLogoSvg(size = 24) {
   return `
     <svg width="${size}" height="${size}" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" class="adi-svg-icon">
@@ -122,9 +129,9 @@ export class AdiUI {
             <span class="adi-status-text">Portfolio Intelligence • Online</span>
           </div>
           <div class="adi-header-actions">
-            <button class="adi-icon-btn" id="adiMicHeaderBtn" title="Voice Input (Mic)" aria-label="Toggle Voice Input">🎤</button>
-            <button class="adi-icon-btn" id="adiClearBtn" title="Clear Chat" aria-label="Clear Chat History">🗑️</button>
-            <button class="adi-icon-btn adi-close-btn" id="adiCloseBtn" title="Close Assistant" aria-label="Close Chat Window">×</button>
+            <button class="adi-icon-btn" id="adiMicHeaderBtn" title="Voice Input (Mic)" aria-label="Toggle Voice Input">${MIC_SVG}</button>
+            <button class="adi-icon-btn" id="adiClearBtn" title="Clear Chat" aria-label="Clear Chat History">${TRASH_SVG}</button>
+            <button class="adi-icon-btn adi-close-btn" id="adiCloseBtn" title="Close Assistant" aria-label="Close Chat Window">${CLOSE_SVG}</button>
           </div>
         </header>
 
@@ -158,7 +165,7 @@ export class AdiUI {
           <div class="adi-jd-box">
             <div class="adi-jd-header">
               <h5>Match Rohan to a Job Description</h5>
-              <button class="adi-icon-btn" id="adiJdCloseBtn">×</button>
+              <button class="adi-icon-btn" id="adiJdCloseBtn">${CLOSE_SVG}</button>
             </div>
             <p>Paste a job description to compare it with verified portfolio evidence.</p>
             <textarea id="adiJdInput" rows="5" placeholder="Paste requirements, roles, or tech stack here..."></textarea>
@@ -172,9 +179,9 @@ export class AdiUI {
         <!-- Input Bar -->
         <footer class="adi-footer">
           <div class="adi-input-wrapper">
-            <button class="adi-input-mic-btn" id="adiMicInputBtn" title="Speak question" aria-label="Microphone Voice Input">🎤</button>
+            <button class="adi-input-mic-btn" id="adiMicInputBtn" title="Speak question" aria-label="Microphone Voice Input">${MIC_SVG}</button>
             <textarea id="adiInput" rows="1" placeholder="Ask Adi about Rohan’s work..." aria-label="Ask Adi about Rohan's work"></textarea>
-            <button class="adi-send-btn" id="adiSendBtn" aria-label="Send message">➤</button>
+            <button class="adi-send-btn" id="adiSendBtn" aria-label="Send message">${SEND_SVG}</button>
           </div>
           <p class="adi-privacy-note">Adi answers from this portfolio. Please avoid sharing sensitive personal information.</p>
         </footer>
@@ -201,7 +208,7 @@ export class AdiUI {
               </div>
             ` : ''}
             ${!isUser ? `
-              <button class="adi-speaker-btn" data-msg-idx="${idx}" title="Read message aloud" aria-label="Read response aloud">🔊 Listen</button>
+              <button class="adi-speaker-btn" data-msg-idx="${idx}" title="Read message aloud" aria-label="Read response aloud">${SPEAKER_SVG} Listen</button>
             ` : ''}
           </div>
         </div>
@@ -323,10 +330,10 @@ export class AdiUI {
           this.assistant.speakText(msg.text, btn, (isSpeaking) => {
             if (isSpeaking) {
               btn.classList.add('speaking');
-              btn.textContent = '⏹ Stop Listening';
+              btn.innerHTML = `${STOP_SPEAKER_SVG} Stop Listening`;
             } else {
               btn.classList.remove('speaking');
-              btn.textContent = '🔊 Listen';
+              btn.innerHTML = `${SPEAKER_SVG} Listen`;
             }
           });
         }
