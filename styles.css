@@ -831,23 +831,45 @@ button,a{font:inherit}
   box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
 }
 
-/* Mobile responsive rules */
-@media(max-width:710px) {
+/* Mobile & Tablet Responsive Rules */
+@media (max-width: 900px) {
+  .adi-chat-panel {
+    width: min(440px, calc(100vw - 32px));
+  }
+}
+
+@media (max-width: 710px) {
   .adi-launcher {
     right: 16px;
-    bottom: 80px;
+    bottom: 84px;
     width: 54px;
     height: 54px;
+    z-index: 999999;
   }
   .adi-tooltip {
     display: none;
   }
   .adi-chat-panel {
-    right: 12px;
-    left: 12px;
-    bottom: 16px;
-    width: calc(100vw - 24px);
-    height: min(85vh, 600px);
+    right: 8px;
+    left: 8px;
+    bottom: 10px;
+    width: calc(100vw - 16px);
+    height: calc(100dvh - 24px);
+    max-height: 680px;
+    border-radius: 20px;
+    z-index: 999999;
+  }
+  .adi-header {
+    padding: 12px 14px;
+  }
+  .adi-header h4 {
+    font-size: 14px;
+  }
+  .adi-footer {
+    padding: 10px 12px;
+  }
+  #adiInput {
+    font-size: 14px; /* Prevents iOS WebKit auto-zoom */
   }
 }
 

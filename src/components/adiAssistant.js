@@ -71,11 +71,12 @@ export class AdiAssistant {
     const voices = this.speechSynth.getVoices() || [];
     if (!voices.length) return null;
 
-    // Known female voice keywords to exclude
+    // Known female voice keywords to aggressively exclude (Desktop + Mobile iOS/Android)
     const femaleKeywords = [
       'female', 'samantha', 'zira', 'karen', 'hazel', 'susan', 'victoria', 
       'moira', 'veena', 'fiona', 'catherine', 'alice', 'jenny', 'aria',
-      'eva', 'sarah', 'ava', 'emma', 'serena', 'monica', 'amanda', 'kyoko', 'yuri'
+      'eva', 'sarah', 'ava', 'emma', 'serena', 'monica', 'amanda', 'kyoko', 'yuri',
+      'tessa', 'nicky', 'heather', 'tracey', 'stephanie', 'siri female'
     ];
 
     const isFemale = (name) => {
@@ -83,11 +84,12 @@ export class AdiAssistant {
       return femaleKeywords.some(f => lower.includes(f));
     };
 
-    // Preferred Male voice keywords across OS platforms
+    // Preferred Male voice keywords across OS platforms & Mobile Chrome / Safari
     const maleKeywords = [
       'david', 'mark', 'george', 'james', 'daniel', 'alex', 'oliver',
       'fred', 'guy', 'christopher', 'eric', 'liam', 'arthur', 'gordon',
-      'rishi', 'aaron', 'male'
+      'rishi', 'aaron', 'male', 'man', 'boy', 'sfg', 'tpd', 'rxb',
+      'google uk english male', 'google us english male', 'google english (male)'
     ];
 
     const isMaleKeyword = (name) => {
@@ -134,8 +136,12 @@ export class AdiAssistant {
     if (maleVoice) {
       utterance.voice = maleVoice;
     }
+
     utterance.rate = 0.95;
-    utterance.pitch = 0.92; // Warm, natural male pitch tone
+    // Lower pitch (0.80 - 0.88) guarantees a deep, confident male tone even on mobile fallbacks
+    const voiceName = maleVoice ? maleVoice.name.toLowerCase() : '';
+    const hasExplicitMaleKeyword = ['david', 'mark', 'george', 'james', 'daniel', 'alex', 'oliver', 'fred', 'rishi', 'male'].some(k => voiceName.includes(k));
+    utterance.pitch = hasExplicitMaleKeyword ? 0.90 : 0.80;
 
     this.activeSpeakerBtn = btnElement;
     this.currentlySpeakingUtterance = utterance;
@@ -164,12 +170,16 @@ export class AdiAssistant {
     }
   }
 
-  // Stop All Active Speech
+  // Stop All Active Speech Immediately
   stopSpeech() {
     if (this.speechSynth) {
       try {
         this.speechSynth.pause();
         this.speechSynth.cancel();
+        // Flush queue on mobile iOS/Android
+        setTimeout(() => {
+          try { if (this.speechSynth) this.speechSynth.cancel(); } catch (e) {}
+        }, 40);
       } catch (e) {}
     }
     if (this.activeSpeakerBtn) {
