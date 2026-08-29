@@ -285,19 +285,19 @@ button,a{font:inherit}
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: linear-gradient(145deg, rgba(16, 37, 68, 0.95), rgba(6, 16, 32, 0.92));
-  border: 1px solid rgba(100, 223, 255, 0.6);
-  box-shadow: 0 0 25px rgba(100, 223, 255, 0.4), inset 0 0 15px rgba(100, 223, 255, 0.2), 0 12px 30px rgba(0, 0, 0, 0.6);
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  box-shadow: 0 0 25px var(--cyan-soft), inset 0 0 15px var(--cyan-soft), 0 12px 30px rgba(0, 0, 0, 0.6);
   cursor: pointer;
   display: grid;
   place-items: center;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease, border-color 0.4s ease;
   backdrop-filter: blur(16px);
 }
 .adi-launcher:hover {
   transform: scale(1.1) translateY(-3px);
   border-color: var(--cyan);
-  box-shadow: 0 0 35px var(--cyan), inset 0 0 20px rgba(100, 223, 255, 0.35), 0 16px 40px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 35px var(--cyan), inset 0 0 20px var(--cyan-soft), 0 16px 40px rgba(0, 0, 0, 0.7);
 }
 .adi-launcher-icon {
   position: relative;
@@ -324,8 +324,8 @@ button,a{font:inherit}
   right: 74px;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(10, 22, 42, 0.95);
-  border: 1px solid rgba(100, 223, 255, 0.3);
+  background: var(--sys-bar-bg);
+  border: 1px solid var(--panel-border);
   color: var(--text-main);
   padding: 6px 14px;
   border-radius: 8px;
@@ -333,7 +333,7 @@ button,a{font:inherit}
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition: opacity 0.25s ease, transform 0.25s ease, background 0.4s ease;
   box-shadow: 0 8px 25px rgba(0,0,0,0.5);
   backdrop-filter: blur(10px);
 }
@@ -351,9 +351,9 @@ button,a{font:inherit}
   width: min(420px, calc(100vw - 32px));
   height: min(650px, calc(100vh - 120px));
   border-radius: 24px;
-  background: linear-gradient(165deg, rgba(13, 25, 48, 0.96) 0%, rgba(6, 14, 28, 0.94) 100%);
-  border: 1px solid rgba(100, 223, 255, 0.25);
-  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.8), 0 0 45px rgba(100, 223, 255, 0.15);
+  background: var(--window-bg);
+  border: 1px solid var(--panel-border);
+  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.8), 0 0 45px var(--cyan-soft);
   backdrop-filter: blur(24px);
   display: flex;
   flex-direction: column;
@@ -361,7 +361,7 @@ button,a{font:inherit}
   opacity: 0;
   pointer-events: none;
   transform: scale(0.92) translateY(20px);
-  transition: opacity 0.28s cubic-bezier(0.16,1,0.3,1), transform 0.28s cubic-bezier(0.16,1,0.3,1);
+  transition: opacity 0.28s cubic-bezier(0.16,1,0.3,1), transform 0.28s cubic-bezier(0.16,1,0.3,1), background 0.4s ease, border-color 0.4s ease;
 }
 .adi-chat-panel.active {
   opacity: 1;
@@ -375,19 +375,21 @@ button,a{font:inherit}
   align-items: center;
   gap: 12px;
   padding: 14px 18px;
-  background: rgba(10, 20, 38, 0.85);
-  border-bottom: 1px solid rgba(100, 223, 255, 0.15);
+  background: var(--window-title-bg);
+  border-bottom: 1px solid var(--panel-border);
+  transition: background 0.4s ease, border-color 0.4s ease;
 }
 .adi-avatar-box {
   position: relative;
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(100, 223, 255, 0.08);
-  border: 1px solid rgba(100, 223, 255, 0.4);
+  background: var(--cyan-soft);
+  border: 1px solid var(--cyan);
   display: grid;
   place-items: center;
-  box-shadow: 0 0 15px rgba(100, 223, 255, 0.2);
+  box-shadow: 0 0 15px var(--cyan-soft);
+  transition: all 0.4s ease;
 }
 .adi-status-dot {
   position: absolute;

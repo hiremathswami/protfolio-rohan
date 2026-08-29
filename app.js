@@ -111,11 +111,19 @@ function tick(){
 tick();
 setInterval(tick,30000);
 
-document.querySelector('#themeToggle').addEventListener('click',()=>{
-  document.body.classList.toggle('night');
-  localStorage.setItem('rohan-os-theme-v1',document.body.classList.contains('night')?'night':'day');
-});
-if(localStorage.getItem('rohan-os-theme-v1')==='night')document.body.classList.add('night');
+const themeBtn = document.querySelector('#themeToggle');
+if (themeBtn) {
+  themeBtn.addEventListener('click', () => {
+    document.body.classList.toggle('night');
+    const isNight = document.body.classList.contains('night');
+    localStorage.setItem('rohan-os-theme-v1', isNight ? 'night' : 'day');
+    themeBtn.textContent = isNight ? '🌙' : '◐';
+  });
+  if (localStorage.getItem('rohan-os-theme-v1') === 'night') {
+    document.body.classList.add('night');
+    themeBtn.textContent = '🌙';
+  }
+}
 
 function setupNotes(){
   const list=document.querySelector('#notes'),input=document.querySelector('#noteInput'),form=document.querySelector('#noteForm');
