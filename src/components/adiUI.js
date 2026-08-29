@@ -66,23 +66,26 @@ export class AdiUI {
       if (saved) {
         this.messages = JSON.parse(saved);
       } else {
-        const greetingText = this.assistant.getGreeting();
+        const welcomeObj = this.assistant.getGreetingObject();
         this.messages = [
           {
             sender: 'adi',
-            text: greetingText,
-            sources: ['Portfolio Intelligence'],
+            text: welcomeObj.text,
+            spokenText: welcomeObj.spokenText,
+            sources: [welcomeObj.source],
             actions: this.assistant.getContactActions()
           }
         ];
         this.saveHistory();
       }
     } catch (e) {
+      const welcomeObj = this.assistant.getGreetingObject();
       this.messages = [
         {
           sender: 'adi',
-          text: this.assistant.getGreeting(),
-          sources: ['Portfolio Intelligence'],
+          text: welcomeObj.text,
+          spokenText: welcomeObj.spokenText,
+          sources: [welcomeObj.source],
           actions: this.assistant.getContactActions()
         }
       ];
@@ -344,7 +347,8 @@ export class AdiUI {
         const idx = parseInt(btn.dataset.msgIdx, 10);
         const msg = this.messages[idx];
         if (msg) {
-          this.assistant.speakText(msg.text, btn, (isSpeaking) => {
+          const textToSpeak = msg.spokenText || msg.text;
+          this.assistant.speakText(textToSpeak, btn, (isSpeaking) => {
             if (isSpeaking) {
               btn.classList.add('speaking');
               btn.innerHTML = `${STOP_SPEAKER_SVG} Stop Listening`;
@@ -386,9 +390,10 @@ export class AdiUI {
           const firstRow = container.querySelector('.adi-msg-row.assistant');
           if (firstRow) {
             const speakerBtn = firstRow.querySelector('.adi-speaker-btn');
-            const welcomeText = this.messages[0]?.text;
-            if (welcomeText && speakerBtn) {
-              this.assistant.speakText(welcomeText, speakerBtn, (isSpeaking) => {
+            const firstMsg = this.messages[0];
+            const textToSpeak = firstMsg?.spokenText || firstMsg?.text;
+            if (textToSpeak && speakerBtn) {
+              this.assistant.speakText(textToSpeak, speakerBtn, (isSpeaking) => {
                 if (isSpeaking) {
                   speakerBtn.classList.add('speaking');
                   speakerBtn.innerHTML = `${STOP_SPEAKER_SVG} Stop Listening`;
@@ -414,11 +419,13 @@ export class AdiUI {
 
   clearChat() {
     this.assistant.stopSpeech();
+    const welcomeObj = this.assistant.getGreetingObject();
     this.messages = [
       {
         sender: 'adi',
-        text: this.assistant.getGreeting(),
-        sources: ['Portfolio Intelligence'],
+        text: welcomeObj.text,
+        spokenText: welcomeObj.spokenText,
+        sources: [welcomeObj.source],
         actions: this.assistant.getContactActions()
       }
     ];

@@ -130,14 +130,37 @@ export class AdiAssistant {
     this.currentlySpeakingUtterance = null;
   }
 
-  // Check if visitor is returning or first time in session
-  getGreeting() {
+  // Get structured welcome message object
+  getGreetingObject() {
     const hasVisited = sessionStorage.getItem('adi_has_visited');
     if (hasVisited) {
-      return `I’m Adi, Rohan Hiremathswami’s AI portfolio assistant. How can I help you explore Rohan’s work today?`;
+      return {
+        text: "I’m Adi, Rohan Hiremathswami’s AI portfolio assistant. How can I help you explore Rohan’s work today?",
+        spokenText: "I’m Adi, Rohan Hiremathswami’s AI portfolio assistant. How can I help you explore Rohan’s work today?",
+        source: "Profile Summary"
+      };
     }
     sessionStorage.setItem('adi_has_visited', 'true');
-    return `Hello, I’m Adi—Rohan Hiremathswami’s AI portfolio assistant. Rohan is a Full-Stack and AI Developer based in Kolhapur. I can help you explore his skills, projects, education, experience, and contact information. What would you like to know?`;
+    return {
+      text:
+        "Hello, I’m Adi—Rohan Hiremathswami’s AI portfolio assistant. " +
+        "Rohan is a Full-Stack and AI Developer based in Kolhapur, Maharashtra. " +
+        "He builds MERN stack web applications, integrates AI capabilities, " +
+        "and creates responsive, high-performance web products. " +
+        "How can I help you explore his work today?",
+
+      spokenText:
+        "Hello, I’m Adi, Rohan Hiremathswami’s AI portfolio assistant. " +
+        "Rohan is a Full-Stack and AI Developer based in Kolhapur, Maharashtra. " +
+        "How can I help you explore his work today?",
+
+      source: "Profile Summary"
+    };
+  }
+
+  // Check if visitor is returning or first time in session
+  getGreeting() {
+    return this.getGreetingObject().text;
   }
 
   // Main Query Router (calls /api/adi if available, falls back gracefully to smart client engine)
