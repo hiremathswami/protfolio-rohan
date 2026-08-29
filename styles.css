@@ -281,7 +281,7 @@ button,a{font:inherit}
   position: fixed;
   right: 24px;
   bottom: 24px;
-  z-index: 99;
+  z-index: 99999;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -347,7 +347,7 @@ button,a{font:inherit}
   position: fixed;
   right: 24px;
   bottom: 96px;
-  z-index: 99;
+  z-index: 99999;
   width: min(420px, calc(100vw - 32px));
   height: min(650px, calc(100vh - 120px));
   border-radius: 24px;

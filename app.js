@@ -1,3 +1,5 @@
+import { AdiUI } from './src/components/adiUI.js';
+
 const projectData={
   ora:{title:'Ora Jewellers',folder:'ora_jewellers',tags:['Full development','Jewellery','Responsive web'],desc:'A complete jewellery website experience, developed end to end with a refined product presentation and a customer-facing browsing flow.',link:'https://orajweles.lovable.app/',type:'Web Application'},
   '3d':{title:'3D Interactive Website',folder:'3d_interactive_site',tags:['3D web','Interactive UI','Recorded demo'],desc:'An experimental interactive 3D web experience. The project is complete; a screen recording is available while its public deployment is pending.',video:'assets/videos/3d-interactive-website-demo.mp4',type:'Interactive Experience'},
@@ -231,12 +233,14 @@ function streamChatGPTTokenText(el, text, onComplete){
   step();
 }
 
-// Lazy-load Adi AI Portfolio Assistant after initial page render
+// Initialize Adi AI Portfolio Assistant
 if (typeof window !== 'undefined') {
   const initAdi = () => {
-    import('./src/components/adiUI.js').then(module => {
-      new module.AdiUI();
-    }).catch(err => console.error("Adi Assistant initialization failed:", err));
+    try {
+      new AdiUI();
+    } catch (err) {
+      console.error("Adi Assistant initialization failed:", err);
+    }
   };
   if (document.readyState === 'loading') {
     window.addEventListener('DOMContentLoaded', initAdi);
