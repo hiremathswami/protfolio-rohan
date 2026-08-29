@@ -382,6 +382,73 @@ export class AdiUI {
     this.messages.push(msg);
     this.saveHistory();
     this.updateMessagesDOM();
+
+    // Trigger live token streaming animation for assistant messages
+    if (msg.sender === 'adi') {
+      const container = document.getElementById('adiMessages');
+      if (container) {
+        const rows = container.querySelectorAll('.adi-msg-row.assistant');
+        const lastRow = rows[rows.length - 1];
+        if (lastRow) {
+          const textEl = lastRow.querySelector('.adi-msg-text');
+          const sourcesEl = lastRow.querySelector('.adi-sources-row');
+          const actionsEl = lastRow.querySelector('.adi-actions-row');
+          const speakerBtn = lastRow.querySelector('.adi-speaker-btn');
+
+          if (sourcesEl) sourcesEl.style.display = 'none';
+          if (actionsEl) actionsEl.style.display = 'none';
+          if (speakerBtn) speakerBtn.style.display = 'none';
+
+          this.streamChatGPTTokenText(textEl, msg.text, () => {
+            if (sourcesEl) sourcesEl.style.display = 'flex';
+            if (actionsEl) actionsEl.style.display = 'flex';
+            if (speakerBtn) speakerBtn.style.display = 'inline-block';
+            this.scrollToBottom();
+          });
+        }
+      }
+    }
+  }
+
+  streamChatGPTTokenText(el, text, onComplete) {
+    if (!text) return;
+    el.textContent = '';
+    el.classList.add('is-generating');
+
+    const words = text.match(/\S+|\s+/g) || [text];
+    let tokenIdx = 0;
+
+    const cursor = document.createElement('span');
+    cursor.className = 'chatgpt-cursor';
+    cursor.textContent = '▋';
+    el.appendChild(cursor);
+
+    const step = () => {
+      if (tokenIdx < words.length) {
+        const token = words[tokenIdx];
+        const span = document.createElement('span');
+        span.className = 'chatgpt-token';
+        span.textContent = token;
+        cursor.insertAdjacentElement('beforebegin', span);
+        tokenIdx++;
+        this.scrollToBottom();
+
+        let delay = 35 + Math.floor(Math.random() * 25);
+        if (token.includes('.') || token.includes('!') || token.includes('?')) {
+          delay += 180;
+        } else if (token.includes(',') || token.includes(';')) {
+          delay += 90;
+        }
+        setTimeout(step, delay);
+      } else {
+        el.classList.remove('is-generating');
+        cursor.remove();
+        el.innerHTML = this.formatMessageText(text);
+        if (onComplete) onComplete();
+        this.scrollToBottom();
+      }
+    };
+    step();
   }
 
   updateMessagesDOM() {
