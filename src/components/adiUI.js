@@ -517,6 +517,10 @@ export class AdiUI {
     cursor.textContent = '▋';
     el.appendChild(cursor);
 
+    const isVoice = this.voiceRepliesEnabled;
+    // When voice is enabled, sync token streaming to ~320ms per word to match spoken speech pacing
+    const baseWordDelay = isVoice ? 320 : 110;
+
     const step = () => {
       if (tokenIdx < words.length) {
         const token = words[tokenIdx];
@@ -527,11 +531,11 @@ export class AdiUI {
         tokenIdx++;
         this.scrollToBottom();
 
-        let delay = 35 + Math.floor(Math.random() * 25);
+        let delay = baseWordDelay + Math.floor(Math.random() * 30);
         if (token.includes('.') || token.includes('!') || token.includes('?')) {
-          delay += 180;
-        } else if (token.includes(',') || token.includes(';')) {
-          delay += 90;
+          delay += isVoice ? 260 : 120;
+        } else if (token.includes(',') || token.includes(';') || token.includes(':')) {
+          delay += isVoice ? 140 : 60;
         }
         setTimeout(step, delay);
       } else {
