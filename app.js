@@ -117,11 +117,11 @@ if (themeBtn) {
     document.body.classList.toggle('night');
     const isNight = document.body.classList.contains('night');
     localStorage.setItem('rohan-os-theme-v1', isNight ? 'night' : 'day');
-    themeBtn.textContent = isNight ? '🌙' : '◐';
+    themeBtn.textContent = '◐';
   });
   if (localStorage.getItem('rohan-os-theme-v1') === 'night') {
     document.body.classList.add('night');
-    themeBtn.textContent = '🌙';
+    themeBtn.textContent = '◐';
   }
 }
 
