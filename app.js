@@ -231,6 +231,20 @@ function streamChatGPTTokenText(el, text, onComplete){
   step();
 }
 
+// Lazy-load Adi AI Portfolio Assistant after initial page render
+if (typeof window !== 'undefined') {
+  const initAdi = () => {
+    import('./src/components/adiUI.js').then(module => {
+      new module.AdiUI();
+    }).catch(err => console.error("Adi Assistant initialization failed:", err));
+  };
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', initAdi);
+  } else {
+    initAdi();
+  }
+}
+
 
 
 

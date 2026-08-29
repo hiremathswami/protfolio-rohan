@@ -271,3 +271,586 @@ button,a{font:inherit}
 
 @media(max-width:1030px){.desktop{grid-template-columns:minmax(260px,.8fr) minmax(310px,1fr);padding-bottom:132px}.assistant-stage{grid-column:2;grid-row:1/4}.telemetry-panel{grid-column:1}.project-feed{grid-column:1}.shortcut-notes{grid-column:1;align-self:auto}.top-nav{gap:13px}}
 @media(max-width:710px){.system-bar{height:58px;grid-template-columns:1fr auto}.brand span:last-child,.top-nav,.system-actions .online,.system-actions #clock{display:none}.desktop{display:flex;flex-direction:column;min-height:calc(100svh - 58px);padding:28px 15px 125px;gap:15px;overflow:auto}.mission-panel,.assistant-stage,.telemetry-panel,.project-feed,.shortcut{width:100%;max-width:480px;align-self:center}.mission-panel{order:1}.assistant-stage{order:2;height:460px;min-height:460px}.telemetry-panel{order:3}.shortcut{order:4}.project-feed{order:5}.mission-panel h1{font-size:50px}.dock{left:10px;right:10px;transform:none;max-width:calc(100vw - 20px);overflow:auto}.desktop .world-glow{width:720px;height:720px;top:33%}.orbit{display:none}.system-actions{justify-self:end}.founder-layout{grid-template-columns:1fr}.founder-avatar-card{max-width:280px;margin:0 auto 15px}}
+
+/* ==========================================================================
+   Adi AI Portfolio Assistant Styling (Glassmorphic & Recruiter Friendly)
+   ========================================================================== */
+
+/* Adi Launcher Button */
+.adi-launcher {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 99;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(16,37,66,0.95), rgba(7,18,36,0.92));
+  border: 1px solid var(--cyan);
+  box-shadow: 0 0 20px var(--cyan-soft), 0 10px 25px rgba(0,0,0,0.5);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(14px);
+}
+.adi-launcher:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 0 30px var(--cyan), 0 14px 35px rgba(0,0,0,0.6);
+}
+.adi-launcher-icon {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+.adi-monogram {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: #ffffff;
+  text-shadow: 0 0 12px var(--cyan);
+}
+.adi-orbit {
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  border: 1.5px dashed var(--cyan);
+  animation: adiOrbitRotate 12s linear infinite;
+  opacity: 0.7;
+}
+@keyframes adiOrbitRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.adi-launcher.first-pulse {
+  animation: adiLauncherPulse 2.5s cubic-bezier(0.16, 1, 0.3, 1) 1;
+}
+@keyframes adiLauncherPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.18); box-shadow: 0 0 40px var(--cyan); }
+}
+.adi-tooltip {
+  position: absolute;
+  right: 70px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--window-title-bg);
+  border: 1px solid var(--panel-border);
+  color: var(--text-main);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font: 11px "DM Mono", monospace;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.adi-launcher:hover .adi-tooltip {
+  opacity: 1;
+  transform: translateY(-50%) translateX(-4px);
+}
+
+/* Adi Chat Window Container */
+.adi-chat-panel {
+  position: fixed;
+  right: 24px;
+  bottom: 92px;
+  z-index: 99;
+  width: min(410px, calc(100vw - 32px));
+  height: min(640px, calc(100vh - 120px));
+  border-radius: 22px;
+  background: var(--window-bg);
+  border: 1px solid var(--panel-border);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.75), 0 0 40px var(--cyan-soft);
+  backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.92) translateY(20px);
+  transition: opacity 0.28s cubic-bezier(0.16,1,0.3,1), transform 0.28s cubic-bezier(0.16,1,0.3,1);
+}
+.adi-chat-panel.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1) translateY(0);
+}
+
+/* Adi Header */
+.adi-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--window-title-bg);
+  border-bottom: 1px solid var(--panel-border);
+}
+.adi-avatar-box {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--cyan-soft);
+  border: 1px solid var(--cyan);
+  display: grid;
+  place-items: center;
+}
+.adi-avatar {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--text-main);
+}
+.adi-status-dot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--mint);
+  border: 2px solid #030712;
+  box-shadow: 0 0 8px var(--mint);
+}
+.adi-header-info {
+  flex: 1;
+  min-width: 0;
+}
+.adi-header-info h4 {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text-main);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.adi-badge-pill {
+  font: 9px "DM Mono", monospace;
+  padding: 1px 6px;
+  border-radius: 99px;
+  background: var(--cyan-soft);
+  color: var(--cyan);
+  border: 1px solid var(--panel-border);
+}
+.adi-status-text {
+  display: block;
+  font: 10px "DM Mono", monospace;
+  color: var(--text-body);
+}
+.adi-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.adi-icon-btn {
+  background: transparent;
+  border: 0;
+  color: var(--text-body);
+  font-size: 15px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+.adi-icon-btn:hover {
+  background: var(--cyan-soft);
+  color: var(--text-main);
+}
+.adi-close-btn {
+  font-size: 22px;
+  line-height: 1;
+}
+
+/* Adi Mode Notification Bar */
+.adi-mode-bar {
+  padding: 6px 14px;
+  background: rgba(100, 223, 255, 0.06);
+  border-bottom: 1px solid rgba(100, 223, 255, 0.1);
+  font: 10px "DM Mono", monospace;
+  color: var(--cyan);
+  display: flex;
+  align-items: center;
+}
+.adi-mode-bar i {
+  font-style: normal;
+  margin-right: 5px;
+}
+
+/* Quick Prompts Bar */
+.adi-quick-prompts {
+  display: flex;
+  gap: 6px;
+  padding: 10px 14px;
+  overflow-x: auto;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--panel-border);
+  scrollbar-width: none;
+}
+.adi-quick-prompts::-webkit-scrollbar {
+  display: none;
+}
+.adi-prompt-btn {
+  padding: 6px 11px;
+  border-radius: 99px;
+  background: var(--card-bg);
+  border: 1px solid var(--panel-border);
+  color: var(--text-body);
+  font: 10px "DM Mono", monospace;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex: 0 0 auto;
+}
+.adi-prompt-btn:hover {
+  border-color: var(--cyan);
+  color: var(--text-main);
+  background: var(--cyan-soft);
+}
+.adi-prompt-btn.highlight {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: var(--cyan-soft);
+}
+
+/* Messages Container */
+.adi-messages {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.adi-msg-row {
+  display: flex;
+  gap: 10px;
+  max-width: 92%;
+}
+.adi-msg-row.user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+.adi-msg-row.assistant {
+  align-self: flex-start;
+}
+.adi-msg-avatar {
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--cyan-soft);
+  border: 1px solid var(--cyan);
+  color: var(--text-main);
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  display: grid;
+  place-items: center;
+
+}
+.adi-msg-bubble {
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  line-height: 1.55;
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: none;
+}
+.adi-msg-row.user .adi-msg-bubble {
+  background: var(--btn-gradient);
+  border: 1px solid var(--cyan);
+  color: #ffffff;
+  border-bottom-right-radius: 3px;
+}
+.adi-msg-row.assistant .adi-msg-bubble {
+  background: var(--card-bg);
+  border: 1px solid var(--panel-border);
+  color: var(--text-main);
+  border-bottom-left-radius: 3px;
+}
+.adi-msg-text ul {
+  margin: 6px 0;
+  padding-left: 18px;
+}
+.adi-msg-text li {
+  margin-bottom: 4px;
+}
+
+/* Source Chips */
+.adi-sources-row {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.adi-source-chip {
+  font: 9px "DM Mono", monospace;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--cyan-soft);
+  color: var(--cyan);
+  border: 1px solid rgba(100, 223, 255, 0.2);
+}
+
+/* Action Buttons */
+.adi-actions-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.adi-action-btn {
+  font: 10px "DM Mono", monospace;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: var(--btn-gradient);
+  border: 1px solid var(--cyan);
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.adi-action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--cyan-soft);
+}
+
+/* Speaker Read Aloud Button */
+.adi-speaker-btn {
+  display: inline-block;
+  margin-top: 8px;
+  background: transparent;
+  border: 1px solid var(--panel-border);
+  border-radius: 6px;
+  color: var(--text-body);
+  font: 9px "DM Mono", monospace;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.adi-speaker-btn:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: var(--cyan-soft);
+}
+.adi-speaker-btn.speaking {
+  border-color: var(--mint);
+  color: var(--mint);
+  background: rgba(101, 231, 189, 0.15);
+}
+
+/* Typing Indicator */
+.adi-typing-indicator {
+  display: flex;
+  gap: 4px;
+  padding: 8px 16px;
+  align-items: center;
+}
+.adi-typing-indicator .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  animation: adiDotBlink 1.4s infinite ease-in-out both;
+}
+.adi-typing-indicator .dot:nth-child(1) { animation-delay: 0s; }
+.adi-typing-indicator .dot:nth-child(2) { animation-delay: 0.2s; }
+.adi-typing-indicator .dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes adiDotBlink {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Footer & Input */
+.adi-footer {
+  padding: 12px 14px;
+  background: var(--window-title-bg);
+  border-top: 1px solid var(--panel-border);
+}
+.adi-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--card-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 4px 8px;
+  transition: border-color 0.2s ease;
+}
+.adi-input-wrapper:focus-within {
+  border-color: var(--cyan);
+}
+.adi-input-mic-btn {
+  background: transparent;
+  border: 0;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  color: var(--text-body);
+  transition: all 0.2s ease;
+}
+.adi-input-mic-btn:hover {
+  background: var(--cyan-soft);
+  color: var(--text-main);
+}
+.adi-input-mic-btn.listening {
+  color: #ff4757;
+  background: rgba(255, 71, 87, 0.15);
+  animation: micPulse 1.2s infinite alternate;
+}
+@keyframes micPulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.15); }
+}
+#adiInput {
+  flex: 1;
+  background: transparent;
+  border: 0;
+  color: var(--text-main);
+  font-size: 13px;
+  font-family: inherit;
+  resize: none;
+  outline: none;
+  max-height: 80px;
+  padding: 6px 0;
+}
+.adi-send-btn {
+  background: var(--cyan-soft);
+  border: 1px solid var(--panel-border);
+  color: var(--cyan);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all 0.2s ease;
+  font-size: 12px;
+}
+.adi-send-btn:hover {
+  background: var(--cyan);
+  color: #030712;
+}
+.adi-privacy-note {
+  margin: 8px 0 0;
+  font: 9px "DM Mono", monospace;
+  color: var(--text-body);
+  text-align: center;
+  opacity: 0.8;
+}
+
+/* Job Match Overlay Modal */
+.adi-jd-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: rgba(3, 7, 18, 0.85);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.adi-jd-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.adi-jd-box {
+  width: 100%;
+  background: var(--window-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+}
+.adi-jd-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.adi-jd-header h5 {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text-main);
+}
+.adi-jd-box p {
+  margin: 0 0 12px;
+  font-size: 12px;
+  color: var(--text-body);
+}
+#adiJdInput {
+  width: 100%;
+  background: var(--card-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  color: var(--text-main);
+  padding: 10px;
+  font-family: inherit;
+  font-size: 12px;
+  outline: none;
+  resize: vertical;
+}
+#adiJdInput:focus {
+  border-color: var(--cyan);
+}
+.adi-jd-footer {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.adi-disclaimer {
+  font: 9px "DM Mono", monospace;
+  color: var(--text-body);
+  max-width: 60%;
+}
+.adi-submit-btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: var(--btn-gradient);
+  border: 1px solid var(--cyan);
+  color: #ffffff;
+  font: 11px "DM Mono", monospace;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.adi-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px var(--cyan-soft);
+}
+
+/* Mobile responsive rules */
+@media(max-width:710px) {
+  .adi-launcher {
+    right: 16px;
+    bottom: 80px;
+    width: 52px;
+    height: 52px;
+  }
+  .adi-tooltip {
+    display: none;
+  }
+  .adi-chat-panel {
+    right: 12px;
+    left: 12px;
+    bottom: 16px;
+    width: calc(100vw - 24px);
+    height: min(85vh, 600px);
+  }
+}
+
