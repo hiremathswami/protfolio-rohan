@@ -65,6 +65,52 @@ export class AdiAssistant {
     }
   }
 
+  // Helper to strictly select male voices across Windows, macOS, iOS, Android & Linux
+  selectBestMaleVoice() {
+    if (!this.speechSynth) return null;
+    const voices = this.speechSynth.getVoices() || [];
+    if (!voices.length) return null;
+
+    // Known female voice keywords to exclude
+    const femaleKeywords = [
+      'female', 'samantha', 'zira', 'karen', 'hazel', 'susan', 'victoria', 
+      'moira', 'veena', 'fiona', 'catherine', 'alice', 'jenny', 'aria',
+      'eva', 'sarah', 'ava', 'emma', 'serena', 'monica', 'amanda', 'kyoko', 'yuri'
+    ];
+
+    const isFemale = (name) => {
+      const lower = name.toLowerCase();
+      return femaleKeywords.some(f => lower.includes(f));
+    };
+
+    // Preferred Male voice keywords across OS platforms
+    const maleKeywords = [
+      'david', 'mark', 'george', 'james', 'daniel', 'alex', 'oliver',
+      'fred', 'guy', 'christopher', 'eric', 'liam', 'arthur', 'gordon',
+      'rishi', 'aaron', 'male'
+    ];
+
+    const isMaleKeyword = (name) => {
+      const lower = name.toLowerCase();
+      return maleKeywords.some(m => lower.includes(m));
+    };
+
+    const englishVoices = voices.filter(v => v.lang && v.lang.toLowerCase().startsWith('en'));
+    const pool = englishVoices.length ? englishVoices : voices;
+
+    // 1. Explicit Male Keyword match & NOT Female
+    let best = pool.find(v => isMaleKeyword(v.name) && !isFemale(v.name));
+    if (best) return best;
+
+    // 2. Any English voice that is NOT female
+    best = pool.find(v => !isFemale(v.name));
+    if (best) return best;
+
+    // 3. Any non-female voice
+    best = voices.find(v => !isFemale(v.name));
+    return best || voices[0];
+  }
+
   // Read Response Aloud using SpeechSynthesis (Text-to-Speech)
   speakText(text, btnElement, onStateChange) {
     if (!this.speechSynth) return;
@@ -84,8 +130,12 @@ export class AdiAssistant {
     cleanText = cleanText.replace(/\bAdi\b/gi, 'Aadi');
 
     const utterance = new SpeechSynthesisUtterance(cleanText);
+    const maleVoice = this.selectBestMaleVoice();
+    if (maleVoice) {
+      utterance.voice = maleVoice;
+    }
     utterance.rate = 0.95;
-    utterance.pitch = 1.0;
+    utterance.pitch = 0.92; // Warm, natural male pitch tone
 
     this.activeSpeakerBtn = btnElement;
     this.currentlySpeakingUtterance = utterance;
