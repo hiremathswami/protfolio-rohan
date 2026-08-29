@@ -69,17 +69,17 @@ export class AdiAssistant {
   speakText(text, btnElement, onStateChange) {
     if (!this.speechSynth) return;
 
-    // Stop existing speech if currently speaking
-    if (this.speechSynth.speaking) {
+    // If currently speaking or pending, cancel speech immediately
+    if (this.speechSynth.speaking || this.speechSynth.pending) {
+      const isSameButton = (this.activeSpeakerBtn === btnElement);
       this.stopSpeech();
-      if (this.activeSpeakerBtn === btnElement) {
-        this.activeSpeakerBtn = null;
+      if (isSameButton) {
         if (onStateChange) onStateChange(false);
         return;
       }
     }
 
-    const cleanText = text.replace(/<[^>]*>/g, '').replace(/Source: [^\n]*/g, '').trim();
+    const cleanText = text.replace(/<[^>]*>/g, '').replace(/Source: [^\n]*/g, '').replace(/•/g, '').trim();
     const utterance = new SpeechSynthesisUtterance(cleanText);
     utterance.rate = 1.0;
     utterance.pitch = 1.0;
@@ -88,29 +88,43 @@ export class AdiAssistant {
     this.currentlySpeakingUtterance = utterance;
 
     utterance.onend = () => {
-      this.activeSpeakerBtn = null;
-      this.currentlySpeakingUtterance = null;
-      if (onStateChange) onStateChange(false);
+      if (this.activeSpeakerBtn === btnElement) {
+        this.activeSpeakerBtn = null;
+        this.currentlySpeakingUtterance = null;
+        if (onStateChange) onStateChange(false);
+      }
     };
 
     utterance.onerror = () => {
-      this.activeSpeakerBtn = null;
-      this.currentlySpeakingUtterance = null;
-      if (onStateChange) onStateChange(false);
+      if (this.activeSpeakerBtn === btnElement) {
+        this.activeSpeakerBtn = null;
+        this.currentlySpeakingUtterance = null;
+        if (onStateChange) onStateChange(false);
+      }
     };
 
     if (onStateChange) onStateChange(true);
-    this.speechSynth.speak(utterance);
+    try {
+      this.speechSynth.speak(utterance);
+    } catch (e) {
+      if (onStateChange) onStateChange(false);
+    }
   }
 
   // Stop All Active Speech
   stopSpeech() {
-    if (this.speechSynth && this.speechSynth.speaking) {
-      this.speechSynth.cancel();
+    if (this.speechSynth) {
+      try {
+        this.speechSynth.pause();
+        this.speechSynth.cancel();
+      } catch (e) {}
     }
     if (this.activeSpeakerBtn) {
+      this.activeSpeakerBtn.classList.remove('speaking');
+      this.activeSpeakerBtn.textContent = '🔊 Listen';
       this.activeSpeakerBtn = null;
     }
+    this.currentlySpeakingUtterance = null;
   }
 
   // Check if visitor is returning or first time in session
