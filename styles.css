@@ -130,7 +130,35 @@ button,a{font:inherit}
 .shortcut em,.project-feed em{font-style:normal;color:var(--cyan)}
 .shortcut-projects{grid-column:1;animation:desktopSectionEntrance .75s cubic-bezier(0.16,1,0.3,1) .52s both}
 .shortcut-skills{grid-column:1;animation:desktopSectionEntrance .75s cubic-bezier(0.16,1,0.3,1) .62s both}
+.shortcut-certs{grid-column:1;animation:desktopSectionEntrance .75s cubic-bezier(0.16,1,0.3,1) .68s both}
 .shortcut-notes{grid-column:3;align-self:end;animation:desktopSectionEntrance .75s cubic-bezier(0.16,1,0.3,1) .72s both}
+
+/* Project Directory Folder Explorer Styling */
+.projects-folder-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:18px}
+.folder-card{padding:16px;border-radius:12px;background:var(--card-bg);border:1px solid var(--panel-border);cursor:pointer;transition:all .25s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column;justify-content:space-between}
+.folder-card:hover{border-color:var(--cyan);transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,0.5),0 0 20px var(--cyan-soft)}
+.folder-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.folder-icon{font-size:28px}
+.folder-card h4{margin:0 0 4px;font-size:15px;color:var(--text-main);font-weight:600}
+.folder-card p{margin:0;font-size:11px;color:var(--text-body)}
+.folder-btn{display:inline-block;margin-top:12px;font:10px "DM Mono",monospace;color:var(--cyan);font-weight:500}
+.badge{font:9px "DM Mono",monospace;padding:2px 7px;border-radius:99px;background:var(--cyan-soft);color:var(--cyan);border:1px solid var(--panel-border)}
+
+.folder-nav-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--panel-border);flex-wrap:wrap}
+.back-folder-btn{padding:8px 14px;border:1px solid var(--cyan);border-radius:8px;background:var(--cyan-soft);color:var(--cyan);font:11px "DM Mono",monospace;cursor:pointer;transition:all .2s}
+.back-folder-btn:hover{background:var(--cyan);color:#030914;transform:translateX(-2px)}
+.folder-path-crumb{font:11px "DM Mono",monospace;color:var(--text-body)}
+.detail-header-row{display:flex;gap:14px;align-items:center;margin-bottom:12px}
+.detail-folder-icon{font-size:36px}
+.detail-title{margin:0 0 4px;font-size:22px;color:var(--text-main)}
+.detail-type-badge{font:10px "DM Mono",monospace;color:var(--mint);background:rgba(101,231,189,0.14);padding:3px 8px;border-radius:6px}
+.detail-tags-row{margin:10px 0 14px}
+.detail-desc{font-size:14px;line-height:1.65;color:var(--text-body);margin:14px 0}
+.detail-action-row{margin:16px 0}
+.detail-link-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:8px;background:var(--btn-gradient);border:1px solid var(--cyan);color:#fff;font-size:12px;text-decoration:none;font-weight:500;transition:all .2s}
+.detail-link-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px var(--cyan-soft)}
+.detail-media-box{margin-top:22px;padding-top:18px;border-top:1px solid var(--panel-border)}
+.detail-media-box h5{margin:0 0 10px;font-size:13px;color:var(--cyan);font-family:"DM Mono",monospace}
 
 .project-feed{grid-column:3;align-self:start;border-radius:14px;padding:17px;animation:desktopSectionEntrance .8s cubic-bezier(0.16,1,0.3,1) .68s both}
 .project-feed .panel-label{margin-bottom:10px}
@@ -168,8 +196,8 @@ button,a{font:inherit}
 .close:hover{transform:scale(1.2) rotate(90deg);color:var(--cyan)}
 
 .window-body{padding:clamp(18px,3vw,32px);overflow-x:hidden;color:var(--text-main)}
-.window-body h3{margin:0 0 8px;font-size:26px;letter-spacing:-.05em;word-wrap:break-word;color:var(--text-main)}
-.window-body p{color:var(--text-body);line-height:1.6;word-wrap:break-word;overflow-wrap:break-word}
+.window-body h3{margin:0 0 8px;font-size:26px;letter-spacing:-.05em;color:var(--text-main);word-break:normal;overflow-wrap:break-word}
+.window-body p{color:var(--text-body);line-height:1.65;word-break:normal;overflow-wrap:break-word;hyphens:none;-webkit-hyphens:none;text-align:left}
 .project{padding:18px 0;border-top:1px solid var(--panel-border);transition:background .2s}
 .project:first-of-type{margin-top:25px}
 .project h4{margin:0 0 7px;font-size:19px;color:var(--text-main)}
@@ -187,6 +215,27 @@ button,a{font:inherit}
 .notes li{padding:10px 0;border-bottom:1px solid var(--panel-border);color:var(--text-body)}
 .notes button{float:right;border:0;background:transparent;color:#ff8f8a;cursor:pointer}
 
+/* Certificate Cards System */
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:14px}
+.cert-grid.compact{grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.cert-card{padding:16px;border-radius:12px;background:var(--card-bg);border:1px solid var(--panel-border);box-shadow:0 8px 24px rgba(0,0,0,0.22);transition:all .25s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column;justify-content:space-between}
+.cert-card:hover{border-color:var(--cyan);box-shadow:0 12px 30px rgba(0,0,0,0.4),0 0 20px var(--cyan-soft);transform:translateY(-3px)}
+.cert-card.major{background:linear-gradient(145deg, rgba(14,28,52,0.9), rgba(7,16,36,0.85))}
+.cert-card-header{display:flex;gap:12px;align-items:flex-start}
+.cert-icon{flex:0 0 38px;width:38px;height:38px;border-radius:9px;display:grid;place-items:center;font-weight:700;font-size:15px;border:1px solid var(--panel-border)}
+.cert-icon.coursera{background:rgba(0,86,210,0.22);color:#60a5fa;border-color:rgba(96,165,250,0.4)}
+.cert-icon.udacity{background:rgba(1,164,228,0.22);color:#38bdf8;border-color:rgba(56,189,248,0.4)}
+.cert-icon.dc{background:rgba(5,209,144,0.18);color:var(--mint);border-color:rgba(101,231,189,0.35);font-size:14px}
+.cert-meta{flex:1;min-width:0}
+.cert-meta h4{margin:0 0 4px;font-size:14px;line-height:1.35;color:var(--text-main);font-weight:600}
+.cert-issuer{display:block;font:10px "DM Mono",monospace;color:var(--cyan);margin-bottom:4px}
+.cert-id{display:block;font:9px "DM Mono",monospace;color:var(--text-body)}
+.cert-id code{color:var(--text-main);background:var(--cyan-soft);padding:2px 5px;border-radius:4px}
+.cert-type{display:block;font:9px "DM Mono",monospace;color:var(--text-body);letter-spacing:0.04em;margin-bottom:4px}
+.ai-badge{color:var(--mint);background:rgba(101,231,189,0.18);padding:1px 5px;border-radius:4px;font-weight:600;font-size:9px}
+.cert-status{display:inline-block;margin-top:6px;font:10px "DM Mono",monospace;color:var(--mint);font-weight:500}
+.cert-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06)}
+
 .founder-layout{display:grid;grid-template-columns:210px minmax(0,1fr);gap:22px;align-items:start;width:100%}
 .founder-avatar-card{padding:18px;border:1px solid var(--panel-border);border-radius:14px;background:var(--card-bg);text-align:center;box-shadow:var(--panel-shadow);transition:all .3s ease}
 .founder-avatar-card:hover{border-color:var(--cyan);box-shadow:var(--panel-hover-shadow);transform:translateY(-3px)}
@@ -201,7 +250,8 @@ button,a{font:inherit}
 .avatar-btn:hover{background:var(--cyan);color:#030914;transform:translateY(-2px);box-shadow:0 6px 18px var(--cyan-soft)}
 .avatar-btn.secondary{border-color:var(--panel-border);color:var(--text-body);background:transparent}
 .avatar-btn.secondary:hover{border-color:var(--cyan);color:var(--text-main)}
-.founder-details{min-width:0;width:100%}
+.founder-details{min-width:0;width:100%;text-align:left}
+.founder-details h3,.founder-details p{word-break:normal!important;overflow-wrap:break-word!important;hyphens:none!important;-webkit-hyphens:none!important;text-align:left!important;line-height:1.65}
 .gen-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--panel-border);transition:border-color 0.4s ease}
 .gen-badge{font:10px "DM Mono",monospace;color:var(--cyan);letter-spacing:.08em;transition:color .3s}
 .click-hint{font:9px "DM Mono",monospace;color:var(--text-body)}
@@ -210,7 +260,7 @@ button,a{font:inherit}
 .chatgpt-cursor{display:inline-block;color:var(--cyan);margin-left:3px;font-weight:bold;font-size:0.95em;box-shadow:0 0 12px var(--cyan);animation:chatgptBlink .7s infinite alternate;vertical-align:baseline}
 .chatgpt-cursor.fade-out{opacity:0;transition:opacity 0.4s ease-out}
 @keyframes chatgptBlink{0%{opacity:1;filter:brightness(1.5)}100%{opacity:.2;filter:brightness(0.8)}}
-.chatgpt-token{display:inline;animation:tokenFadeIn .22s cubic-bezier(0.16, 1, 0.3, 1) forwards}
+.chatgpt-token{display:inline;word-break:normal;white-space:normal;animation:tokenFadeIn .22s cubic-bezier(0.16, 1, 0.3, 1) forwards}
 @keyframes tokenFadeIn{0%{opacity:0;transform:translateY(3px);color:var(--cyan);text-shadow:0 0 10px var(--cyan)}100%{opacity:1;transform:translateY(0);color:var(--text-main);text-shadow:none}}
 .is-generating{border-left:3px solid var(--cyan);padding-left:12px;background:linear-gradient(90deg, var(--cyan-soft), transparent);transition:all .3s ease;border-radius:0 6px 6px 0}
 .founder-stats-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:20px;padding-top:14px;border-top:1px solid var(--panel-border);width:100%;transition:border-color 0.4s ease}
