@@ -79,9 +79,12 @@ export class AdiAssistant {
       }
     }
 
-    const cleanText = text.replace(/<[^>]*>/g, '').replace(/Source: [^\n]*/g, '').replace(/•/g, '').trim();
+    let cleanText = text.replace(/<[^>]*>/g, '').replace(/Source: [^\n]*/g, '').replace(/•/g, '').trim();
+    // Phonetic replacement for Speech Synthesis so voice engines pronounce "Aadi" naturally instead of spelling "A-D-I"
+    cleanText = cleanText.replace(/\bAdi\b/gi, 'Aadi');
+
     const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.rate = 1.0;
+    utterance.rate = 0.95;
     utterance.pitch = 1.0;
 
     this.activeSpeakerBtn = btnElement;
