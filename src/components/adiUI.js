@@ -485,6 +485,20 @@ export class AdiUI {
             if (actionsEl) actionsEl.style.display = 'flex';
             if (speakerBtn) speakerBtn.style.display = 'inline-block';
             this.scrollToBottom();
+
+            // Auto-speak new response if voice replies are enabled
+            if (this.voiceRepliesEnabled && speakerBtn) {
+              const textToSpeak = msg.spokenText || msg.text;
+              this.assistant.speakText(textToSpeak, speakerBtn, (isSpeaking) => {
+                if (isSpeaking) {
+                  speakerBtn.classList.add('speaking');
+                  speakerBtn.innerHTML = `${STOP_SPEAKER_SVG} Stop Listening`;
+                } else {
+                  speakerBtn.classList.remove('speaking');
+                  speakerBtn.innerHTML = `${SPEAKER_SVG} Listen`;
+                }
+              });
+            }
           });
         }
       }
