@@ -1,5 +1,27 @@
 import { AdiAssistant } from './adiAssistant.js';
 
+function getAdiLogoSvg(size = 24) {
+  return `
+    <svg width="${size}" height="${size}" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" class="adi-svg-icon">
+      <circle cx="18" cy="18" r="16" stroke="url(#adiRingGrad)" stroke-width="1.8" stroke-dasharray="5 2.5"/>
+      <circle cx="18" cy="18" r="10" fill="url(#adiCoreGrad)"/>
+      <path d="M18 9L21.5 18L18 27L14.5 18L18 9Z" fill="#ffffff" filter="drop-shadow(0 0 4px #64dfff)"/>
+      <path d="M9 18L18 14.5L27 18L18 21.5L9 18Z" fill="rgba(100, 223, 255, 0.75)"/>
+      <defs>
+        <linearGradient id="adiRingGrad" x1="0" y1="0" x2="36" y2="36">
+          <stop offset="0%" stop-color="#64dfff"/>
+          <stop offset="50%" stop-color="#a855f7"/>
+          <stop offset="100%" stop-color="#65e7bd"/>
+        </linearGradient>
+        <radialGradient id="adiCoreGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1e40af"/>
+          <stop offset="100%" stop-color="#071226"/>
+        </radialGradient>
+      </defs>
+    </svg>
+  `;
+}
+
 export class AdiUI {
   constructor() {
     this.assistant = new AdiAssistant();
@@ -83,8 +105,7 @@ export class AdiUI {
       <!-- Adi Floating Launcher Widget -->
       <button class="adi-launcher ${isFirstTime ? 'first-pulse' : ''}" id="adiLauncher" aria-label="Open Adi Portfolio AI Assistant" title="Ask Adi about my work">
         <div class="adi-launcher-icon">
-          <span class="adi-monogram">A</span>
-          <span class="adi-orbit"></span>
+          ${getAdiLogoSvg(32)}
         </div>
         <span class="adi-tooltip">Ask Adi about my work</span>
       </button>
@@ -93,7 +114,7 @@ export class AdiUI {
       <section class="adi-chat-panel ${this.isOpen ? 'active' : ''}" id="adiPanel" role="dialog" aria-label="Adi Portfolio Assistant Chat" aria-hidden="${!this.isOpen}">
         <header class="adi-header">
           <div class="adi-avatar-box">
-            <span class="adi-avatar">A</span>
+            ${getAdiLogoSvg(26)}
             <span class="adi-status-dot" title="Online"></span>
           </div>
           <div class="adi-header-info">
@@ -166,7 +187,7 @@ export class AdiUI {
       const isUser = m.sender === 'user';
       return `
         <div class="adi-msg-row ${isUser ? 'user' : 'assistant'}">
-          ${!isUser ? `<div class="adi-msg-avatar">A</div>` : ''}
+          ${!isUser ? `<div class="adi-msg-avatar">${getAdiLogoSvg(22)}</div>` : ''}
           <div class="adi-msg-bubble">
             <div class="adi-msg-text">${this.formatMessageText(m.text)}</div>
             ${!isUser && m.sources && m.sources.length ? `

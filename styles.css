@@ -273,7 +273,7 @@ button,a{font:inherit}
 @media(max-width:710px){.system-bar{height:58px;grid-template-columns:1fr auto}.brand span:last-child,.top-nav,.system-actions .online,.system-actions #clock{display:none}.desktop{display:flex;flex-direction:column;min-height:calc(100svh - 58px);padding:28px 15px 125px;gap:15px;overflow:auto}.mission-panel,.assistant-stage,.telemetry-panel,.project-feed,.shortcut{width:100%;max-width:480px;align-self:center}.mission-panel{order:1}.assistant-stage{order:2;height:460px;min-height:460px}.telemetry-panel{order:3}.shortcut{order:4}.project-feed{order:5}.mission-panel h1{font-size:50px}.dock{left:10px;right:10px;transform:none;max-width:calc(100vw - 20px);overflow:auto}.desktop .world-glow{width:720px;height:720px;top:33%}.orbit{display:none}.system-actions{justify-self:end}.founder-layout{grid-template-columns:1fr}.founder-avatar-card{max-width:280px;margin:0 auto 15px}}
 
 /* ==========================================================================
-   Adi AI Portfolio Assistant Styling (Glassmorphic & Recruiter Friendly)
+   Adi AI Portfolio Assistant Styling (Ultra Glassmorphic & Premium UI)
    ========================================================================== */
 
 /* Adi Launcher Button */
@@ -282,21 +282,22 @@ button,a{font:inherit}
   right: 24px;
   bottom: 24px;
   z-index: 99;
-  width: 58px;
-  height: 58px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(16,37,66,0.95), rgba(7,18,36,0.92));
-  border: 1px solid var(--cyan);
-  box-shadow: 0 0 20px var(--cyan-soft), 0 10px 25px rgba(0,0,0,0.5);
+  background: linear-gradient(145deg, rgba(16, 37, 68, 0.95), rgba(6, 16, 32, 0.92));
+  border: 1px solid rgba(100, 223, 255, 0.6);
+  box-shadow: 0 0 25px rgba(100, 223, 255, 0.4), inset 0 0 15px rgba(100, 223, 255, 0.2), 0 12px 30px rgba(0, 0, 0, 0.6);
   cursor: pointer;
   display: grid;
   place-items: center;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  backdrop-filter: blur(14px);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(16px);
 }
 .adi-launcher:hover {
-  transform: scale(1.08) translateY(-2px);
-  box-shadow: 0 0 30px var(--cyan), 0 14px 35px rgba(0,0,0,0.6);
+  transform: scale(1.1) translateY(-3px);
+  border-color: var(--cyan);
+  box-shadow: 0 0 35px var(--cyan), inset 0 0 20px rgba(100, 223, 255, 0.35), 0 16px 40px rgba(0, 0, 0, 0.7);
 }
 .adi-launcher-icon {
   position: relative;
@@ -305,48 +306,36 @@ button,a{font:inherit}
   display: grid;
   place-items: center;
 }
-.adi-monogram {
-  font-family: "Space Grotesk", sans-serif;
-  font-weight: 700;
-  font-size: 22px;
-  color: #ffffff;
-  text-shadow: 0 0 12px var(--cyan);
+.adi-launcher-icon .adi-svg-icon {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.adi-orbit {
-  position: absolute;
-  inset: 4px;
-  border-radius: 50%;
-  border: 1.5px dashed var(--cyan);
-  animation: adiOrbitRotate 12s linear infinite;
-  opacity: 0.7;
-}
-@keyframes adiOrbitRotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.adi-launcher:hover .adi-launcher-icon .adi-svg-icon {
+  transform: rotate(180deg) scale(1.1);
 }
 .adi-launcher.first-pulse {
   animation: adiLauncherPulse 2.5s cubic-bezier(0.16, 1, 0.3, 1) 1;
 }
 @keyframes adiLauncherPulse {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.18); box-shadow: 0 0 40px var(--cyan); }
+  50% { transform: scale(1.18); box-shadow: 0 0 45px var(--cyan); }
 }
 .adi-tooltip {
   position: absolute;
-  right: 70px;
+  right: 74px;
   top: 50%;
   transform: translateY(-50%);
-  background: var(--window-title-bg);
-  border: 1px solid var(--panel-border);
+  background: rgba(10, 22, 42, 0.95);
+  border: 1px solid rgba(100, 223, 255, 0.3);
   color: var(--text-main);
-  padding: 6px 12px;
+  padding: 6px 14px;
   border-radius: 8px;
   font: 11px "DM Mono", monospace;
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s ease, transform 0.25s ease;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+  backdrop-filter: blur(10px);
 }
 .adi-launcher:hover .adi-tooltip {
   opacity: 1;
@@ -357,15 +346,15 @@ button,a{font:inherit}
 .adi-chat-panel {
   position: fixed;
   right: 24px;
-  bottom: 92px;
+  bottom: 96px;
   z-index: 99;
-  width: min(410px, calc(100vw - 32px));
-  height: min(640px, calc(100vh - 120px));
-  border-radius: 22px;
-  background: var(--window-bg);
-  border: 1px solid var(--panel-border);
-  box-shadow: 0 30px 80px rgba(0,0,0,0.75), 0 0 40px var(--cyan-soft);
-  backdrop-filter: blur(20px);
+  width: min(420px, calc(100vw - 32px));
+  height: min(650px, calc(100vh - 120px));
+  border-radius: 24px;
+  background: linear-gradient(165deg, rgba(13, 25, 48, 0.96) 0%, rgba(6, 14, 28, 0.94) 100%);
+  border: 1px solid rgba(100, 223, 255, 0.25);
+  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.8), 0 0 45px rgba(100, 223, 255, 0.15);
+  backdrop-filter: blur(24px);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -386,24 +375,19 @@ button,a{font:inherit}
   align-items: center;
   gap: 12px;
   padding: 14px 18px;
-  background: var(--window-title-bg);
-  border-bottom: 1px solid var(--panel-border);
+  background: rgba(10, 20, 38, 0.85);
+  border-bottom: 1px solid rgba(100, 223, 255, 0.15);
 }
 .adi-avatar-box {
   position: relative;
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: var(--cyan-soft);
-  border: 1px solid var(--cyan);
+  background: rgba(100, 223, 255, 0.08);
+  border: 1px solid rgba(100, 223, 255, 0.4);
   display: grid;
   place-items: center;
-}
-.adi-avatar {
-  font-family: "Space Grotesk", sans-serif;
-  font-weight: 700;
-  font-size: 17px;
-  color: var(--text-main);
+  box-shadow: 0 0 15px rgba(100, 223, 255, 0.2);
 }
 .adi-status-dot {
   position: absolute;
@@ -431,11 +415,11 @@ button,a{font:inherit}
 }
 .adi-badge-pill {
   font: 9px "DM Mono", monospace;
-  padding: 1px 6px;
+  padding: 1px 7px;
   border-radius: 99px;
-  background: var(--cyan-soft);
+  background: rgba(100, 223, 255, 0.15);
   color: var(--cyan);
-  border: 1px solid var(--panel-border);
+  border: 1px solid rgba(100, 223, 255, 0.3);
 }
 .adi-status-text {
   display: block;
@@ -448,29 +432,31 @@ button,a{font:inherit}
   gap: 6px;
 }
 .adi-icon-btn {
-  background: transparent;
-  border: 0;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   color: var(--text-body);
-  font-size: 15px;
+  font-size: 14px;
   cursor: pointer;
-  padding: 4px 6px;
-  border-radius: 6px;
+  padding: 5px 8px;
+  border-radius: 8px;
   transition: all 0.2s ease;
 }
 .adi-icon-btn:hover {
   background: var(--cyan-soft);
   color: var(--text-main);
+  border-color: var(--cyan);
+  box-shadow: 0 0 10px var(--cyan-soft);
 }
 .adi-close-btn {
-  font-size: 22px;
+  font-size: 18px;
   line-height: 1;
 }
 
 /* Adi Mode Notification Bar */
 .adi-mode-bar {
-  padding: 6px 14px;
+  padding: 7px 16px;
   background: rgba(100, 223, 255, 0.06);
-  border-bottom: 1px solid rgba(100, 223, 255, 0.1);
+  border-bottom: 1px solid rgba(100, 223, 255, 0.12);
   font: 10px "DM Mono", monospace;
   color: var(--cyan);
   display: flex;
@@ -478,27 +464,27 @@ button,a{font:inherit}
 }
 .adi-mode-bar i {
   font-style: normal;
-  margin-right: 5px;
+  margin-right: 6px;
 }
 
 /* Quick Prompts Bar */
 .adi-quick-prompts {
   display: flex;
-  gap: 6px;
-  padding: 10px 14px;
+  gap: 7px;
+  padding: 11px 14px;
   overflow-x: auto;
   white-space: nowrap;
-  border-bottom: 1px solid var(--panel-border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   scrollbar-width: none;
 }
 .adi-quick-prompts::-webkit-scrollbar {
   display: none;
 }
 .adi-prompt-btn {
-  padding: 6px 11px;
+  padding: 6px 12px;
   border-radius: 99px;
-  background: var(--card-bg);
-  border: 1px solid var(--panel-border);
+  background: rgba(15, 30, 56, 0.6);
+  border: 1px solid rgba(100, 223, 255, 0.18);
   color: var(--text-body);
   font: 10px "DM Mono", monospace;
   cursor: pointer;
@@ -509,6 +495,8 @@ button,a{font:inherit}
   border-color: var(--cyan);
   color: var(--text-main);
   background: var(--cyan-soft);
+  box-shadow: 0 0 12px var(--cyan-soft);
+  transform: translateY(-1px);
 }
 .adi-prompt-btn.highlight {
   border-color: var(--cyan);
@@ -516,15 +504,29 @@ button,a{font:inherit}
   background: var(--cyan-soft);
 }
 
-/* Messages Container */
+/* Messages Container & Custom Thin Scrollbar */
 .adi-messages {
   flex: 1;
   padding: 16px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
+.adi-messages::-webkit-scrollbar {
+  width: 5px;
+}
+.adi-messages::-webkit-scrollbar-track {
+  background: rgba(3, 10, 24, 0.4);
+}
+.adi-messages::-webkit-scrollbar-thumb {
+  background: rgba(100, 223, 255, 0.25);
+  border-radius: 99px;
+}
+.adi-messages::-webkit-scrollbar-thumb:hover {
+  background: var(--cyan);
+}
+
 .adi-msg-row {
   display: flex;
   gap: 10px;
@@ -538,53 +540,51 @@ button,a{font:inherit}
   align-self: flex-start;
 }
 .adi-msg-avatar {
-  flex: 0 0 28px;
-  width: 28px;
-  height: 28px;
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  background: var(--cyan-soft);
-  border: 1px solid var(--cyan);
-  color: var(--text-main);
-  font-family: "Space Grotesk", sans-serif;
-  font-weight: 700;
-  font-size: 13px;
+  background: rgba(100, 223, 255, 0.08);
+  border: 1px solid rgba(100, 223, 255, 0.35);
   display: grid;
   place-items: center;
-
+  box-shadow: 0 0 10px rgba(100, 223, 255, 0.15);
 }
 .adi-msg-bubble {
-  padding: 12px 14px;
-  border-radius: 14px;
+  padding: 12px 16px;
+  border-radius: 16px;
   font-size: 13px;
-  line-height: 1.55;
+  line-height: 1.6;
   word-break: normal;
   overflow-wrap: break-word;
   hyphens: none;
 }
 .adi-msg-row.user .adi-msg-bubble {
-  background: var(--btn-gradient);
-  border: 1px solid var(--cyan);
+  background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: #ffffff;
-  border-bottom-right-radius: 3px;
+  border-bottom-right-radius: 4px;
+  box-shadow: 0 4px 18px rgba(37, 99, 235, 0.35);
 }
 .adi-msg-row.assistant .adi-msg-bubble {
-  background: var(--card-bg);
-  border: 1px solid var(--panel-border);
+  background: linear-gradient(135deg, rgba(14, 28, 52, 0.9), rgba(8, 16, 32, 0.85));
+  border: 1px solid rgba(100, 223, 255, 0.2);
   color: var(--text-main);
-  border-bottom-left-radius: 3px;
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 .adi-msg-text ul {
-  margin: 6px 0;
+  margin: 8px 0;
   padding-left: 18px;
 }
 .adi-msg-text li {
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 
 /* Source Chips */
 .adi-sources-row {
   display: flex;
-  gap: 5px;
+  gap: 6px;
   flex-wrap: wrap;
   margin-top: 10px;
   padding-top: 8px;
@@ -592,11 +592,11 @@ button,a{font:inherit}
 }
 .adi-source-chip {
   font: 9px "DM Mono", monospace;
-  padding: 2px 6px;
+  padding: 2px 7px;
   border-radius: 4px;
   background: var(--cyan-soft);
   color: var(--cyan);
-  border: 1px solid rgba(100, 223, 255, 0.2);
+  border: 1px solid rgba(100, 223, 255, 0.25);
 }
 
 /* Action Buttons */
@@ -608,9 +608,9 @@ button,a{font:inherit}
 }
 .adi-action-btn {
   font: 10px "DM Mono", monospace;
-  padding: 5px 10px;
+  padding: 5px 11px;
   border-radius: 6px;
-  background: var(--btn-gradient);
+  background: linear-gradient(135deg, rgba(100, 223, 255, 0.15), rgba(37, 99, 235, 0.2));
   border: 1px solid var(--cyan);
   color: #ffffff;
   text-decoration: none;
@@ -621,15 +621,17 @@ button,a{font:inherit}
 }
 .adi-action-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px var(--cyan-soft);
+  box-shadow: 0 4px 14px var(--cyan-soft);
+  background: var(--cyan);
+  color: #030712;
 }
 
 /* Speaker Read Aloud Button */
 .adi-speaker-btn {
   display: inline-block;
   margin-top: 8px;
-  background: transparent;
-  border: 1px solid var(--panel-border);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 6px;
   color: var(--text-body);
   font: 9px "DM Mono", monospace;
@@ -651,8 +653,8 @@ button,a{font:inherit}
 /* Typing Indicator */
 .adi-typing-indicator {
   display: flex;
-  gap: 4px;
-  padding: 8px 16px;
+  gap: 5px;
+  padding: 8px 18px;
   align-items: center;
 }
 .adi-typing-indicator .dot {
@@ -665,29 +667,26 @@ button,a{font:inherit}
 .adi-typing-indicator .dot:nth-child(1) { animation-delay: 0s; }
 .adi-typing-indicator .dot:nth-child(2) { animation-delay: 0.2s; }
 .adi-typing-indicator .dot:nth-child(3) { animation-delay: 0.4s; }
-@keyframes adiDotBlink {
-  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
-  40% { opacity: 1; transform: scale(1.2); }
-}
 
-/* Footer & Input */
+/* Footer & Input Bar */
 .adi-footer {
   padding: 12px 14px;
-  background: var(--window-title-bg);
-  border-top: 1px solid var(--panel-border);
+  background: rgba(10, 20, 38, 0.85);
+  border-top: 1px solid rgba(100, 223, 255, 0.15);
 }
 .adi-input-wrapper {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: var(--card-bg);
-  border: 1px solid var(--panel-border);
+  background: rgba(6, 14, 28, 0.8);
+  border: 1px solid rgba(100, 223, 255, 0.2);
   border-radius: 12px;
   padding: 4px 8px;
   transition: border-color 0.2s ease;
 }
 .adi-input-wrapper:focus-within {
   border-color: var(--cyan);
+  box-shadow: 0 0 12px var(--cyan-soft);
 }
 .adi-input-mic-btn {
   background: transparent;
@@ -708,10 +707,6 @@ button,a{font:inherit}
   background: rgba(255, 71, 87, 0.15);
   animation: micPulse 1.2s infinite alternate;
 }
-@keyframes micPulse {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.15); }
-}
 #adiInput {
   flex: 1;
   background: transparent;
@@ -726,7 +721,7 @@ button,a{font:inherit}
 }
 .adi-send-btn {
   background: var(--cyan-soft);
-  border: 1px solid var(--panel-border);
+  border: 1px solid rgba(100, 223, 255, 0.3);
   color: var(--cyan);
   width: 32px;
   height: 32px;
@@ -746,7 +741,7 @@ button,a{font:inherit}
   font: 9px "DM Mono", monospace;
   color: var(--text-body);
   text-align: center;
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 /* Job Match Overlay Modal */
@@ -754,8 +749,8 @@ button,a{font:inherit}
   position: absolute;
   inset: 0;
   z-index: 10;
-  background: rgba(3, 7, 18, 0.85);
-  backdrop-filter: blur(12px);
+  background: rgba(3, 7, 18, 0.88);
+  backdrop-filter: blur(14px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -770,11 +765,11 @@ button,a{font:inherit}
 }
 .adi-jd-box {
   width: 100%;
-  background: var(--window-bg);
-  border: 1px solid var(--panel-border);
-  border-radius: 16px;
-  padding: 18px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+  background: rgba(13, 25, 48, 0.95);
+  border: 1px solid rgba(100, 223, 255, 0.3);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.7);
 }
 .adi-jd-header {
   display: flex;
@@ -794,8 +789,8 @@ button,a{font:inherit}
 }
 #adiJdInput {
   width: 100%;
-  background: var(--card-bg);
-  border: 1px solid var(--panel-border);
+  background: rgba(6, 14, 28, 0.8);
+  border: 1px solid rgba(100, 223, 255, 0.2);
   border-radius: 10px;
   color: var(--text-main);
   padding: 10px;
@@ -822,7 +817,7 @@ button,a{font:inherit}
 .adi-submit-btn {
   padding: 8px 14px;
   border-radius: 8px;
-  background: var(--btn-gradient);
+  background: linear-gradient(135deg, #0284c7, #2563eb);
   border: 1px solid var(--cyan);
   color: #ffffff;
   font: 11px "DM Mono", monospace;
@@ -831,7 +826,7 @@ button,a{font:inherit}
 }
 .adi-submit-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px var(--cyan-soft);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
 }
 
 /* Mobile responsive rules */
@@ -839,8 +834,8 @@ button,a{font:inherit}
   .adi-launcher {
     right: 16px;
     bottom: 80px;
-    width: 52px;
-    height: 52px;
+    width: 54px;
+    height: 54px;
   }
   .adi-tooltip {
     display: none;
