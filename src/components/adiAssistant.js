@@ -135,10 +135,10 @@ export class AdiAssistant {
     const hasVisited = sessionStorage.getItem('adi_has_visited');
     const pName = this.data.profile.name;
     if (hasVisited) {
-      return `Welcome back. How can I help you explore ${pName}’s work today?`;
+      return `I’m Adi, ${pName}’s AI portfolio assistant. How can I help you explore ${pName}’s work today?`;
     }
     sessionStorage.setItem('adi_has_visited', 'true');
-    return `Hello, I’m Adi—${pName}’s portfolio assistant. I can help you explore his skills, projects, education, experience, and contact information. What would you like to know?`;
+    return `I’m Adi, ${pName}’s AI portfolio assistant. I can help you explore his skills, projects, education, experience, and contact information. What would you like to know?`;
   }
 
   // Main Query Router (calls /api/adi if available, falls back gracefully to smart client engine)
@@ -151,7 +151,7 @@ export class AdiAssistant {
     // Check for off-topic query check first
     if (this.isOffTopicQuery(cleanQuery)) {
       return {
-        text: `I’m designed to help visitors learn about ${this.data.profile.name}’s professional background, skills, projects, and contact details.`,
+        text: `I’m Adi, ${this.data.profile.name}’s AI portfolio assistant. I’m designed to help visitors learn about ${this.data.profile.name}’s professional background, skills, projects, and contact details.`,
         sources: ["Portfolio Scope"],
         actions: this.getContactActions(),
         mode: "scope_redirect"
@@ -210,7 +210,7 @@ export class AdiAssistant {
     // 1. GREETING / INTRO
     if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('who are you')) {
       return {
-        text: `I’m Adi, the professional portfolio assistant for ${p.name}. ${p.summary}`,
+        text: `I’m Adi, ${p.name}’s AI portfolio assistant. ${p.name} is a ${p.title} based in ${p.location}. He specializes in building MERN stack web applications, integrating AI capabilities, and designing responsive web products.`,
         sources: ["Profile Summary"],
         actions: this.getContactActions(),
         mode: "search"
@@ -220,7 +220,7 @@ export class AdiAssistant {
     // 2. TELL ME ABOUT ROHAN / OVERVIEW
     if (q.includes('tell me about') || q.includes('who is rohan') || q.includes('overview') || q.includes('background') || q.includes('bio')) {
       return {
-        text: `${p.name} is a ${p.title} based in ${p.location}. ${p.headline}\n\nKey Highlights:\n- Degree: ${edu.degree}\n- Core Tech: React.js, Node.js, Express.js, MongoDB (MERN Stack) & Python\n- Certifications: 11 verified credentials across Google Cloud, AWS Generative AI, and Data Analytics\n- Status: ${p.availability}`,
+        text: `${p.name} is a ${p.title} based in ${p.location}. ${p.headline}\n\nKey Highlights:\n- Degree: ${edu.degree} (${edu.institution})\n- Core Tech: React.js, Node.js, Express.js, MongoDB (MERN Stack) & Python\n- Certifications: 11 verified credentials across Google Cloud, AWS Generative AI, and Data Analytics\n- Status: ${p.availability}`,
         sources: ["Profile", "Education", "Certifications"],
         actions: this.getContactActions(),
         mode: "search"
@@ -246,7 +246,7 @@ export class AdiAssistant {
     // 4. EDUCATION
     if (q.includes('education') || q.includes('degree') || q.includes('college') || q.includes('university') || q.includes('bca') || q.includes('study')) {
       return {
-        text: `${p.name} is pursuing a ${edu.degree} in ${edu.specialization} (${edu.period}) in ${edu.location}.\n\nAcademic Highlights:\n` +
+        text: `${p.name} has completed a ${edu.degree} in ${edu.specialization} from ${edu.institution}.\n\nAcademic Highlights:\n` +
           edu.highlights.map(h => `• ${h}`).join('\n'),
         sources: ["Education"],
         actions: this.getContactActions(),
