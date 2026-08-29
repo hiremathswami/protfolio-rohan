@@ -133,12 +133,11 @@ export class AdiAssistant {
   // Check if visitor is returning or first time in session
   getGreeting() {
     const hasVisited = sessionStorage.getItem('adi_has_visited');
-    const pName = this.data.profile.name;
     if (hasVisited) {
-      return `I’m Adi, ${pName}’s AI portfolio assistant. How can I help you explore ${pName}’s work today?`;
+      return `I’m Adi, Rohan Hiremathswami’s AI portfolio assistant. How can I help you explore Rohan’s work today?`;
     }
     sessionStorage.setItem('adi_has_visited', 'true');
-    return `I’m Adi, ${pName}’s AI portfolio assistant. I can help you explore his skills, projects, education, experience, and contact information. What would you like to know?`;
+    return `Hello, I’m Adi—Rohan Hiremathswami’s AI portfolio assistant. Rohan is a Full-Stack and AI Developer based in Kolhapur. I can help you explore his skills, projects, education, experience, and contact information. What would you like to know?`;
   }
 
   // Main Query Router (calls /api/adi if available, falls back gracefully to smart client engine)
@@ -151,7 +150,7 @@ export class AdiAssistant {
     // Check for off-topic query check first
     if (this.isOffTopicQuery(cleanQuery)) {
       return {
-        text: `I’m Adi, ${this.data.profile.name}’s AI portfolio assistant. I’m designed to help visitors learn about ${this.data.profile.name}’s professional background, skills, projects, and contact details.`,
+        text: `I’m Adi, Rohan Hiremathswami’s AI portfolio assistant. I’m designed to help visitors learn about Rohan’s professional background, skills, projects, and contact details.`,
         sources: ["Portfolio Scope"],
         actions: this.getContactActions(),
         mode: "scope_redirect"
@@ -210,7 +209,7 @@ export class AdiAssistant {
     // 1. GREETING / INTRO
     if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('who are you')) {
       return {
-        text: `I’m Adi, ${p.name}’s AI portfolio assistant. ${p.name} is a ${p.title} based in ${p.location}. He specializes in building MERN stack web applications, integrating AI capabilities, and designing responsive web products.`,
+        text: `I’m Adi, Rohan Hiremathswami’s AI portfolio assistant. Rohan is a ${p.title} based in ${p.location}. He specializes in building MERN stack web applications, integrating AI capabilities, and designing responsive web products.`,
         sources: ["Profile Summary"],
         actions: this.getContactActions(),
         mode: "search"
@@ -220,7 +219,7 @@ export class AdiAssistant {
     // 2. TELL ME ABOUT ROHAN / OVERVIEW
     if (q.includes('tell me about') || q.includes('who is rohan') || q.includes('overview') || q.includes('background') || q.includes('bio')) {
       return {
-        text: `${p.name} is a ${p.title} based in ${p.location}. ${p.headline}\n\nKey Highlights:\n- Degree: ${edu.degree} (${edu.institution})\n- Core Tech: React.js, Node.js, Express.js, MongoDB (MERN Stack) & Python\n- Certifications: 11 verified credentials across Google Cloud, AWS Generative AI, and Data Analytics\n- Status: ${p.availability}`,
+        text: `Rohan is a ${p.title} based in ${p.location}. ${p.headline}\n\nKey Highlights:\n- Degree: ${edu.degree} (${edu.institution})\n- Core Tech: React.js, Node.js, Express.js, MongoDB (MERN Stack) & Python\n- Certifications: 11 verified credentials across Google Cloud, AWS Generative AI, and Data Analytics\n- Status: ${p.availability}`,
         sources: ["Profile", "Education", "Certifications"],
         actions: this.getContactActions(),
         mode: "search"
@@ -230,7 +229,7 @@ export class AdiAssistant {
     // 3. SKILLS / TECH TOOLBOX
     if (q.includes('skill') || q.includes('stack') || q.includes('technology') || q.includes('languages') || q.includes('toolbox')) {
       return {
-        text: `${p.name}’s verified technical toolkit is organized into clear domains:\n\n` +
+        text: `Rohan’s verified technical toolkit is organized into clear domains:\n\n` +
           `• Languages: ${s.languages.join(', ')}\n` +
           `• Frontend: ${s.frontend.join(', ')}\n` +
           `• Backend: ${s.backend.join(', ')}\n` +
@@ -246,9 +245,124 @@ export class AdiAssistant {
     // 4. EDUCATION
     if (q.includes('education') || q.includes('degree') || q.includes('college') || q.includes('university') || q.includes('bca') || q.includes('study')) {
       return {
-        text: `${p.name} has completed a ${edu.degree} in ${edu.specialization} from ${edu.institution}.\n\nAcademic Highlights:\n` +
+        text: `Rohan has completed a ${edu.degree} in ${edu.specialization} from ${edu.institution}.\n\nAcademic Highlights:\n` +
           edu.highlights.map(h => `• ${h}`).join('\n'),
         sources: ["Education"],
+        actions: this.getContactActions(),
+        mode: "search"
+      };
+    }
+
+    // 5. SPECIFIC PROJECT LOOKUP
+    for (const item of proj) {
+      if (q.includes(item.name.toLowerCase()) || q.includes(item.id)) {
+        let text = `Project: ${item.name} (${item.category})\n` +
+          `Tagline: ${item.tagline}\n\n` +
+          `• Problem: ${item.problem}\n` +
+          `• Solution: ${item.solution}\n` +
+          `• Rohan's Role: ${item.role}\n` +
+          `• Technologies: ${item.technologies.join(', ')}\n` +
+          `• Verified Outcome: ${item.outcomes.join(' ')}`;
+
+        const actions = [];
+        if (item.liveUrl) actions.push({ label: `View Live ${item.name} ↗`, url: item.liveUrl });
+        if (item.githubUrl) actions.push({ label: `View GitHub ⌘`, url: item.githubUrl });
+        actions.push({ label: "Contact Rohan", url: `mailto:${contact.email}` });
+
+        return {
+          text,
+          sources: [`Project: ${item.name}`],
+          actions,
+          mode: "search"
+        };
+      }
+    }
+
+    // 6. SHOW ALL PROJECTS / BEST PROJECTS
+    if (q.includes('project') || q.includes('portfolio') || q.includes('built') || q.includes('work') || q.includes('showcase')) {
+      let text = `Rohan has built and deployed 5 featured software projects:\n\n`;
+      proj.forEach((item, idx) => {
+        text += `${idx + 1}. ${item.name} (${item.category})\n   ${item.tagline}\n   Tech: ${item.technologies.join(', ')}\n\n`;
+      });
+
+      return {
+        text: text.trim(),
+        sources: ["Projects"],
+        actions: [
+          { label: "View Live Ora Jewellers ↗", url: "https://orajweles.lovable.app/" },
+          { label: "View Live Mahalaxmi Jewellers ↗", url: "https://mahalaxmi-jwellers-owb2-ivory.vercel.app/" },
+          { label: "Contact Rohan", url: `mailto:${contact.email}` }
+        ],
+        mode: "search"
+      };
+    }
+
+    // 7. SPECIFIC TECHNOLOGY QUERY (Does Rohan know X? / Which projects use X?)
+    const techMatch = this.findTechMatch(q);
+    if (techMatch) {
+      const matchingProjects = proj.filter(item => 
+        item.technologies.some(t => t.toLowerCase().includes(techMatch.toLowerCase()))
+      );
+
+      let text = `Yes, Rohan has verified experience with ${techMatch}.\n\n`;
+      if (matchingProjects.length > 0) {
+        text += `Projects utilizing ${techMatch}:\n` +
+          matchingProjects.map(m => `• ${m.name}: ${m.tagline}`).join('\n');
+      } else {
+        text += `${techMatch} is documented in Rohan’s verified technical toolbox.`;
+      }
+
+      return {
+        text,
+        sources: ["Skills", "Projects"],
+        actions: this.getContactActions(),
+        mode: "search"
+      };
+    }
+
+    // 8. CERTIFICATIONS
+    if (q.includes('certif') || q.includes('credential') || q.includes('course') || q.includes('coursera') || q.includes('datacamp') || q.includes('aws') || q.includes('gcp')) {
+      let text = `Rohan holds 11 verified professional certifications and course achievements:\n\n` +
+        `Major Certifications:\n` +
+        `• Essential Google Cloud Infrastructure: Foundation (Coursera / GCP)\n` +
+        `• Google Data Analytics Professional Certificate (Coursera)\n` +
+        `• Introducing Generative AI with AWS (Udacity / AWS)\n\n` +
+        `DataCamp Achievements (8 Courses):\n` +
+        `• Exploratory Data Analysis, Data Viz with Matplotlib, Statistics, Joining Data & Manipulation with pandas (+ AI Tutor), Intro/Intermediate SQL, Data Engineering.`;
+
+      return {
+        text,
+        sources: ["Certifications"],
+        actions: this.getContactActions(),
+        mode: "search"
+      };
+    }
+
+    // 9. CONTACT / EMAIL / LINKEDIN / RESUME
+    if (q.includes('contact') || q.includes('email') || q.includes('linkedin') || q.includes('github') || q.includes('resume') || q.includes('hire') || q.includes('reach')) {
+      return {
+        text: `You can reach out to Rohan directly through any of the following verified channels:\n\n` +
+          `• Email: ${contact.email}\n` +
+          `• LinkedIn: ${contact.linkedin}\n` +
+          `• GitHub: ${contact.github}\n` +
+          `• Current Availability: ${p.availability}`,
+        sources: ["Contact"],
+        actions: [
+          { label: "Send Email ✉", url: `mailto:${contact.email}` },
+          { label: "LinkedIn Profile ↗", url: contact.linkedin },
+          { label: "GitHub Profile ⌘", url: contact.github }
+        ],
+        mode: "search"
+      };
+    }
+
+    // 10. AVAILABILITY
+    if (q.includes('available') || q.includes('open to work') || q.includes('internship') || q.includes('full-time') || q.includes('freelance')) {
+      return {
+        text: `Rohan’s current verified availability status:\n` +
+          `"${p.availability}"\n\n` +
+          `Preferred roles include: ${p.preferredRoles.join(', ')}.`,
+        sources: ["Availability"],
         actions: this.getContactActions(),
         mode: "search"
       };
