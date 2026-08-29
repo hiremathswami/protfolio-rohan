@@ -464,7 +464,7 @@ export class AdiUI {
     this.saveHistory();
     this.updateMessagesDOM();
 
-    // Trigger live token streaming animation for assistant messages
+    // Trigger live token streaming animation and simultaneous voice speech for assistant messages
     if (msg.sender === 'adi') {
       const container = document.getElementById('adiMessages');
       if (container) {
@@ -478,27 +478,26 @@ export class AdiUI {
 
           if (sourcesEl) sourcesEl.style.display = 'none';
           if (actionsEl) actionsEl.style.display = 'none';
-          if (speakerBtn) speakerBtn.style.display = 'none';
+
+          // Start speaking out loud immediately as text generation begins
+          if (this.voiceRepliesEnabled && speakerBtn) {
+            const textToSpeak = msg.spokenText || msg.text;
+            this.assistant.speakText(textToSpeak, speakerBtn, (isSpeaking) => {
+              if (isSpeaking) {
+                speakerBtn.classList.add('speaking');
+                speakerBtn.innerHTML = `${STOP_SPEAKER_SVG} Stop Listening`;
+              } else {
+                speakerBtn.classList.remove('speaking');
+                speakerBtn.innerHTML = `${SPEAKER_SVG} Listen`;
+              }
+            });
+          }
 
           this.streamChatGPTTokenText(textEl, msg.text, () => {
             if (sourcesEl) sourcesEl.style.display = 'flex';
             if (actionsEl) actionsEl.style.display = 'flex';
             if (speakerBtn) speakerBtn.style.display = 'inline-block';
             this.scrollToBottom();
-
-            // Auto-speak new response if voice replies are enabled
-            if (this.voiceRepliesEnabled && speakerBtn) {
-              const textToSpeak = msg.spokenText || msg.text;
-              this.assistant.speakText(textToSpeak, speakerBtn, (isSpeaking) => {
-                if (isSpeaking) {
-                  speakerBtn.classList.add('speaking');
-                  speakerBtn.innerHTML = `${STOP_SPEAKER_SVG} Stop Listening`;
-                } else {
-                  speakerBtn.classList.remove('speaking');
-                  speakerBtn.innerHTML = `${SPEAKER_SVG} Listen`;
-                }
-              });
-            }
           });
         }
       }
