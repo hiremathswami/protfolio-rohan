@@ -12,17 +12,17 @@ function getAdiLogoSvg(size = 24) {
     <svg width="${size}" height="${size}" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" class="adi-svg-icon">
       <circle cx="18" cy="18" r="16" stroke="url(#adiRingGrad)" stroke-width="1.8" stroke-dasharray="5 2.5"/>
       <circle cx="18" cy="18" r="10" fill="url(#adiCoreGrad)"/>
-      <path d="M18 9L21.5 18L18 27L14.5 18L18 9Z" fill="#ffffff" filter="drop-shadow(0 0 4px #64dfff)"/>
-      <path d="M9 18L18 14.5L27 18L18 21.5L9 18Z" fill="rgba(100, 223, 255, 0.75)"/>
+      <path d="M18 9L21.5 18L18 27L14.5 18L18 9Z" fill="#ffffff" style="filter: drop-shadow(0 0 4px var(--cyan));"/>
+      <path d="M9 18L18 14.5L27 18L18 21.5L9 18Z" fill="var(--cyan)"/>
       <defs>
         <linearGradient id="adiRingGrad" x1="0" y1="0" x2="36" y2="36">
-          <stop offset="0%" stop-color="#64dfff"/>
-          <stop offset="50%" stop-color="#a855f7"/>
-          <stop offset="100%" stop-color="#65e7bd"/>
+          <stop offset="0%" stop-color="var(--cyan)"/>
+          <stop offset="50%" stop-color="var(--mint)"/>
+          <stop offset="100%" stop-color="var(--cyan)"/>
         </linearGradient>
         <radialGradient id="adiCoreGrad" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#1e40af"/>
-          <stop offset="100%" stop-color="#071226"/>
+          <stop offset="0%" stop-color="var(--cyan-soft)"/>
+          <stop offset="100%" stop-color="var(--deep)"/>
         </radialGradient>
       </defs>
     </svg>
